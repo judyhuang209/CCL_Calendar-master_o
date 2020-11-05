@@ -1,0 +1,17 @@
+C:\Users\dingqun.weng\Desktop\新增資料夾\CCL_Calendar-master_o\WindowsFormsApp2\bin\Release\WindowsFormsApp2.exe.config
+C:\Users\dingqun.weng\Desktop\新增資料夾\CCL_Calendar-master_o\WindowsFormsApp2\bin\Release\WindowsFormsApp2.exe
+C:\Users\dingqun.weng\Desktop\新增資料夾\CCL_Calendar-master_o\WindowsFormsApp2\bin\Release\WindowsFormsApp2.pdb
+C:\Users\dingqun.weng\Desktop\新增資料夾\CCL_Calendar-master_o\WindowsFormsApp2\bin\Release\Newtonsoft.Json.dll
+C:\Users\dingqun.weng\Desktop\新增資料夾\CCL_Calendar-master_o\WindowsFormsApp2\bin\Release\Newtonsoft.Json.xml
+C:\Users\dingqun.weng\Desktop\新增資料夾\CCL_Calendar-master_o\WindowsFormsApp2\obj\Release\WindowsFormsApp2.csprojAssemblyReference.cache
+C:\Users\dingqun.weng\Desktop\新增資料夾\CCL_Calendar-master_o\WindowsFormsApp2\obj\Release\WindowsFormsApp2.Form1.resources
+C:\Users\dingqun.weng\Desktop\新增資料夾\CCL_Calendar-master_o\WindowsFormsApp2\obj\Release\Order.frm_Calendar_Add.resources
+C:\Users\dingqun.weng\Desktop\新增資料夾\CCL_Calendar-master_o\WindowsFormsApp2\obj\Release\WindowsFormsApp2.frm_Calendar_Master.resources
+C:\Users\dingqun.weng\Desktop\新增資料夾\CCL_Calendar-master_o\WindowsFormsApp2\obj\Release\WindowsFormsApp2.Form_add.resources
+C:\Users\dingqun.weng\Desktop\新增資料夾\CCL_Calendar-master_o\WindowsFormsApp2\obj\Release\WindowsFormsApp2.frm_Calendar_Revise.resources
+C:\Users\dingqun.weng\Desktop\新增資料夾\CCL_Calendar-master_o\WindowsFormsApp2\obj\Release\WindowsFormsApp2.Properties.Resources.resources
+C:\Users\dingqun.weng\Desktop\新增資料夾\CCL_Calendar-master_o\WindowsFormsApp2\obj\Release\WindowsFormsApp2.csproj.GenerateResource.cache
+C:\Users\dingqun.weng\Desktop\新增資料夾\CCL_Calendar-master_o\WindowsFormsApp2\obj\Release\WindowsFormsApp2.csproj.CoreCompileInputs.cache
+C:\Users\dingqun.weng\Desktop\新增資料夾\CCL_Calendar-master_o\WindowsFormsApp2\obj\Release\WindowsFormsApp2.csproj.CopyComplete
+C:\Users\dingqun.weng\Desktop\新增資料夾\CCL_Calendar-master_o\WindowsFormsApp2\obj\Release\WindowsFormsApp2.exe
+C:\Users\dingqun.weng\Desktop\新增資料夾\CCL_Calendar-master_o\WindowsFormsApp2\obj\Release\WindowsFormsApp2.pdb
