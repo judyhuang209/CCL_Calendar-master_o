@@ -50,7 +50,7 @@
             this.EventTypeList.Location = new System.Drawing.Point(119, 176);
             this.EventTypeList.Margin = new System.Windows.Forms.Padding(4);
             this.EventTypeList.Name = "EventTypeList";
-            this.EventTypeList.Size = new System.Drawing.Size(213, 24);
+            this.EventTypeList.Size = new System.Drawing.Size(213, 28);
             this.EventTypeList.TabIndex = 17;
             // 
             // endTimePicker
@@ -62,7 +62,7 @@
             this.endTimePicker.Margin = new System.Windows.Forms.Padding(4);
             this.endTimePicker.Name = "endTimePicker";
             this.endTimePicker.ShowUpDown = true;
-            this.endTimePicker.Size = new System.Drawing.Size(132, 29);
+            this.endTimePicker.Size = new System.Drawing.Size(213, 34);
             this.endTimePicker.TabIndex = 15;
             // 
             // startTimePicker
@@ -74,7 +74,7 @@
             this.startTimePicker.Margin = new System.Windows.Forms.Padding(4);
             this.startTimePicker.Name = "startTimePicker";
             this.startTimePicker.ShowUpDown = true;
-            this.startTimePicker.Size = new System.Drawing.Size(132, 29);
+            this.startTimePicker.Size = new System.Drawing.Size(213, 34);
             this.startTimePicker.TabIndex = 16;
             // 
             // button_confirm
@@ -107,7 +107,7 @@
             this.NoteTextBox.Location = new System.Drawing.Point(119, 229);
             this.NoteTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.NoteTextBox.Name = "NoteTextBox";
-            this.NoteTextBox.Size = new System.Drawing.Size(213, 29);
+            this.NoteTextBox.Size = new System.Drawing.Size(213, 34);
             this.NoteTextBox.TabIndex = 12;
             // 
             // label4
@@ -117,7 +117,7 @@
             this.label4.Location = new System.Drawing.Point(19, 178);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(61, 22);
+            this.label4.Size = new System.Drawing.Size(78, 28);
             this.label4.TabIndex = 8;
             this.label4.Text = "種類：";
             // 
@@ -128,7 +128,7 @@
             this.label3.Location = new System.Drawing.Point(19, 232);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(61, 22);
+            this.label3.Size = new System.Drawing.Size(78, 28);
             this.label3.TabIndex = 9;
             this.label3.Text = "備註：";
             // 
@@ -139,7 +139,7 @@
             this.label2.Location = new System.Drawing.Point(19, 129);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(95, 22);
+            this.label2.Size = new System.Drawing.Size(122, 28);
             this.label2.TabIndex = 10;
             this.label2.Text = "結束時間：";
             // 
@@ -150,19 +150,18 @@
             this.label1.Location = new System.Drawing.Point(19, 76);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(95, 22);
+            this.label1.Size = new System.Drawing.Size(122, 28);
             this.label1.TabIndex = 11;
             this.label1.Text = "開始時間：";
             // 
             // startDatePicker
             // 
             this.startDatePicker.CustomFormat = "";
-            this.startDatePicker.Enabled = false;
             this.startDatePicker.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.startDatePicker.Location = new System.Drawing.Point(119, 25);
             this.startDatePicker.Margin = new System.Windows.Forms.Padding(4);
             this.startDatePicker.Name = "startDatePicker";
-            this.startDatePicker.Size = new System.Drawing.Size(141, 29);
+            this.startDatePicker.Size = new System.Drawing.Size(213, 34);
             this.startDatePicker.TabIndex = 7;
             // 
             // label5
@@ -172,13 +171,13 @@
             this.label5.Location = new System.Drawing.Point(19, 28);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(95, 22);
+            this.label5.Size = new System.Drawing.Size(122, 28);
             this.label5.TabIndex = 18;
             this.label5.Text = "開始時間：";
             // 
             // frm_Calendar_Add
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(346, 341);
             this.Controls.Add(this.startDatePicker);

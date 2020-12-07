@@ -16,9 +16,8 @@ namespace Order
             InitializeComponent();
             setEventTypeList();
             Calendar_Master = frm_Calendar_Master;
+            startDatePicker.Value = Calendar_Master.DateTimePicker1.Value;
         }
-
-
 
         private void button_cancel_Click(object sender, EventArgs e)
         {
@@ -26,25 +25,45 @@ namespace Order
         }
         private void button_confirm_Click(object sender, EventArgs e)
         {
-
             string EventID = EventTypeList.SelectedValue.ToString();
             string ActivityDate = DateTime.Parse(startDatePicker.Value.ToString()).ToString("yyyyMMdd");
-            //string StartTime = DateTime.Parse(startTimePicker.Value.TimeOfDay.ToString()).ToString("HH:mm");
-            //string EndTime = DateTime.Parse(endTimePicker.Value.TimeOfDay.ToString()).ToString("HH:mm");
             string StartTime = DateTime.Parse(startTimePicker.Value.TimeOfDay.ToString()).ToString("HH:mm");
             string EndTime = DateTime.Parse(endTimePicker.Value.TimeOfDay.ToString()).ToString("HH:mm");
             string EventName = EventTypeList.Text;
             string Descriprion = NoteTextBox.Text;
             string UserID = Calendar_Master.agentid();
             string Location = "";
-            int EduID = 0;
             string ModifyID = Calendar_Master.agentid();
+
+            try
+            {
+                String connStr = "";
+                SqlConnection cnn;
+                connStr = "Data Source=" + Global.strProgramIP + ";Initial Catalog=" + Global.strProgramDB + ";User ID=" + Global.strProgramUser + ";Password=" + Global.strProgramPass + ";";
+                cnn = new SqlConnection(connStr);
+
+                cnn.Open();
+                DataTable Agent_Alias;
+                Agent_Alias = SqlHelper.ExecuteDataset(cnn, "xsp_Agent_Table_GetAlias", new object[] { Calendar_Master.agentid() }).Tables[0];
+                foreach (DataRow row in Agent_Alias.Rows)
+                {
+                    ModifyID = row["Alias"].ToString();
+                    break;
+                }
+                    cnn.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Agent table connection failed!");
+                this.Close();
+            }
+
             string ExecType = "C";
             int ActivityID = 0;
             TimeSpan allsecound = DateTime.Parse(endTimePicker.Value.TimeOfDay.ToString())- DateTime.Parse(startTimePicker.Value.TimeOfDay.ToString());
             if (allsecound.TotalSeconds >=600 && EventName != "請選擇")
             {
-                Calendar_PersonalActivity(EventID, EventName, ActivityDate, StartTime, EndTime, UserID, Descriprion, Location, EduID, ModifyID, ExecType, ActivityID);
+                Calendar_PersonalActivity(EventID, EventName, ActivityDate, StartTime, EndTime, UserID, Descriprion, Location,  ModifyID, ExecType, ActivityID);
                 this.Close();
             }
             else
@@ -53,7 +72,7 @@ namespace Order
             }
         }
 
-        private void Calendar_PersonalActivity(string EventID,string EventName,string ActivityDate ,string StartTime,string EndTime,string UserID,string Descriprion,string Location, int EduID, string ModifyID,string ExecType ,int ActivityID)
+        private void Calendar_PersonalActivity(string EventID,string EventName,string ActivityDate ,string StartTime,string EndTime,string UserID,string Descriprion,string Location ,string ModifyID,string ExecType ,int ActivityID)
         {
             try
             {
@@ -64,18 +83,18 @@ namespace Order
 
                 cnn.Open();
                 
-                DataSet dsEvent = SqlHelper.ExecuteDataset(cnn, "xsp_Calendar_PersonalActivity_Insert", new object[] { EventID, EventName, ActivityDate, StartTime, EndTime, UserID, Descriprion,  Location, EduID, ModifyID, ExecType, ActivityID });
+                DataSet dsEvent = SqlHelper.ExecuteDataset(cnn, "xsp_Calendar_PersonalActivity_Insert", new object[] { EventID, EventName, ActivityDate, StartTime, EndTime, UserID, Descriprion,  Location,  ModifyID, ExecType, ActivityID });
                 string dscc = dsEvent.Tables[0].Rows[0]["ActivityID"].ToString();
                 if (dscc == "")
                 {
                     ExecType = "I";
-                    SqlHelper.ExecuteDataset(cnn, "xsp_Calendar_PersonalActivity_Insert", new object[] { EventID, EventName, ActivityDate, StartTime, EndTime, UserID, Descriprion, Location, EduID, ModifyID, ExecType, ActivityID });
+                    SqlHelper.ExecuteDataset(cnn, "xsp_Calendar_PersonalActivity_Insert", new object[] { EventID, EventName, ActivityDate, StartTime, EndTime, UserID, Descriprion, Location,  ModifyID, ExecType, ActivityID });
                     this.Close();
                 }
                 else
                 {
                     ExecType = "U";
-                    SqlHelper.ExecuteDataset(cnn, "xsp_Calendar_PersonalActivity_Insert", new object[] { EventID, EventName, ActivityDate, StartTime, EndTime, UserID, Descriprion, Location, EduID, ModifyID, ExecType, ActivityID });
+                    SqlHelper.ExecuteDataset(cnn, "xsp_Calendar_PersonalActivity_Insert", new object[] { EventID, EventName, ActivityDate, StartTime, EndTime, UserID, Descriprion, Location,  ModifyID, ExecType, ActivityID });
                     this.Close();
                 }
                 cnn.Close();

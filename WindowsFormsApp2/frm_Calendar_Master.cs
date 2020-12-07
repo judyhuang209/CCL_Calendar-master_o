@@ -31,6 +31,33 @@ namespace WindowsFormsApp2
         DataTable Table_Activity;
         int refreshTime = 10;
         List<FlowLayoutPanel> listCell;
+        List<FlowLayoutPanel> listCellWeek;
+
+        private static void ShowTable(DataTable table)
+        {
+            if (table == null)
+                Console.WriteLine("table is null");
+            foreach (DataColumn col in table.Columns)
+            {
+                Console.Write("{0,-14}", col.ColumnName);
+            }
+            Console.WriteLine();
+
+            foreach (DataRow row in table.Rows)
+            {
+                foreach (DataColumn col in table.Columns)
+                {
+                    if (col.DataType.Equals(typeof(DateTime)))
+                        Console.Write("{0,-14:d}", row[col]);
+                    else if (col.DataType.Equals(typeof(Decimal)))
+                        Console.Write("{0,-14:C}", row[col]);
+                    else
+                        Console.Write("{0,-14}", row[col]);
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+        }
 
         private void frm_Calendar_Master_Load(object sender, EventArgs e)
         {
@@ -43,11 +70,11 @@ namespace WindowsFormsApp2
             // dateToday.Text = dateStr;
             // Console.WriteLine(timeNow / 100);    //檢查現在時間
             // 判斷現在時間點決定捲軸Y位置
-            if (timeNow / 100 < 8)
+            if (timeNow / 100 <= 9)
             {
                 timeSection = section9_10;
             }
-            else if (timeNow / 100 > 21)
+            else if (timeNow / 100 >= 21)
             {
                 timeSection = section20_21;
             }
@@ -55,12 +82,6 @@ namespace WindowsFormsApp2
             {
                 switch (timeNow / 100)
                 {
-                    case 8:
-                        timeSection = section9_10;
-                        break;
-                    case 9:
-                        timeSection = section9_10;
-                        break;
                     case 10:
                         timeSection = section10_11;
                         break;
@@ -94,9 +115,6 @@ namespace WindowsFormsApp2
                     case 20:
                         timeSection = section20_21;
                         break;
-                    case 21:
-                        timeSection = section20_21;
-                        break;
                 }
             }
 
@@ -114,13 +132,17 @@ namespace WindowsFormsApp2
             List<FlowLayoutPanel> flowLayoutPanels = new List<FlowLayoutPanel>();
             #endregion
 
-
             listCell = new List<FlowLayoutPanel>
                 {
                     Cell9, Cell10, Cell11, Cell12, Cell13, Cell14,
                     Cell15, Cell16, Cell17, Cell18, Cell19, Cell20
                 };
 
+            listCellWeek = new List<FlowLayoutPanel>
+            {
+                CellWeekday1, CellWeekday2, CellWeekday3, CellWeekday4, CellWeekday5,
+                CellWeekday6, CellWeekday7
+            };
 
             RefreshTable();
 
@@ -129,12 +151,11 @@ namespace WindowsFormsApp2
             timer1.Start();
             #endregion
 
-            
-
         }
         private void TimerTick(object sender, EventArgs e)
         {
             RefreshTable();
+            RefreshTable_Week();
             timer1.Interval = (refreshTime * 1000); // 60 secs
             timer1.Start();
         }
@@ -165,7 +186,36 @@ namespace WindowsFormsApp2
                 refreshTime = Convert.ToInt32(SqlHelper.ExecuteDataset(cnn, "xsp_Calendar_RefreshTime").Tables[0].Rows[0][0].ToString());
 
                 cnn.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Connection failed!");
+                this.Close();
+            }
+        }
 
+        private void refresh_Week()
+        {
+            try
+            {
+                String connStr = "";
+                SqlConnection cnn;
+                connStr = "Data Source=" + Global.strProgramIP + ";Initial Catalog=" + Global.strProgramDB + ";User ID=" + Global.strProgramUser + ";Password=" + Global.strProgramPass + ";";
+                cnn = new SqlConnection(connStr);
+
+                cnn.Open();
+
+                Table_Holiday = SqlHelper.ExecuteDataset(cnn, "xsp_Calendar_EYHoliday").Tables[0];
+
+                Table_Holiday_Per = SqlHelper.ExecuteDataset(cnn, "xsp_Calendar_Holiday_ByAgentDate_Week", new object[] { agentid(), DateTime.Parse(dateTimePicker2.Value.ToString()).ToString("yyyyMMdd"), DateTime.Parse(dateTimePicker2.Value.AddDays(6).ToString()) .ToString("yyyyMMdd") }).Tables[0];
+
+                Table_Personal = SqlHelper.ExecuteDataset(cnn, "xsp_Calendar_PersonalActivity_ByAgentDate2_Week", new object[] { agentid(), DateTime.Parse(dateTimePicker2.Value.ToString()).ToString("yyyyMMdd"), DateTime.Parse(dateTimePicker2.Value.AddDays(6).ToString()).ToString("yyyyMMdd"), /*Global.strAgentID*/AgentID.Text }).Tables[0];
+
+                Table_Activity = SqlHelper.ExecuteDataset(cnn, "xsp_Calendar_Activity_ByAgentDate2_Week", new object[] { agentid(), DateTime.Parse(dateTimePicker2.Value.ToString()).ToString("yyyyMMdd"), DateTime.Parse(dateTimePicker2.Value.AddDays(6).ToString()).ToString("yyyyMMdd"), /*Global.strAgentID*/ AgentID.Text }).Tables[0];
+
+                refreshTime = Convert.ToInt32(SqlHelper.ExecuteDataset(cnn, "xsp_Calendar_RefreshTime").Tables[0].Rows[0][0].ToString());
+
+                cnn.Close();
             }
             catch
             {
@@ -190,12 +240,11 @@ namespace WindowsFormsApp2
             }
 
         }
+
         private void backcolor()
         {
-
             switch (int.Parse(DateTime.Now.ToString("HH")))
             {
-                case 8:
                 case 9:
                     listCell[0].BackColor = Color.LightYellow;
                     section9_10.BackColor = Color.LightYellow;
@@ -251,6 +300,7 @@ namespace WindowsFormsApp2
                     break;
             }
          }
+
         private void EnableSection()
         {
             for (int i = 0; i < 12; i++)
@@ -258,6 +308,7 @@ namespace WindowsFormsApp2
                 listCell[i].BackColor = Color.Transparent;
                 listCell[i].Enabled = true;
                 listCell[i].Controls.Clear();
+                listCell[i].ContextMenuStrip = NewTaskMenu;
             }
             IEnumerable<Label> list = tableLayoutPanel1.Controls.OfType<Label>();
             foreach (Label rb in list)
@@ -265,17 +316,20 @@ namespace WindowsFormsApp2
                 rb.BackColor = Color.Transparent;
             }
         }
+
         private void EnableTable()
         {
             tableLayoutPanel1.BackColor = Color.Transparent;
             tableLayoutPanel1.Enabled = true;
         }
+
         private void DisableTable()
         {
             tableLayoutPanel1.BackColor = Color.DimGray;
             tableLayoutPanel1.AutoScrollPosition = new Point(0, 0);
             tableLayoutPanel1.Enabled = false;
         }
+
         private bool DayOffOrNot(DateTime DateToday, DataTable Table)
         {
             foreach (DataRow row in Table.Rows)
@@ -300,7 +354,9 @@ namespace WindowsFormsApp2
 
         private void SectionOffOrNot(DateTime DateToday, DataTable Table1, DataTable Table2, DataTable Table3)
         {
-
+            ShowTable(Table1);
+            ShowTable(Table2);
+            ShowTable(Table3);
             foreach (DataRow row in Table1.Rows)
             {
                 DateTime startTime = (DateTime)row["StartTime"];
@@ -316,6 +372,7 @@ namespace WindowsFormsApp2
                     break;
                 }
             }
+            
             foreach (DataRow row in Table2.Rows)
             {
                 DateTime startTime = (DateTime)row["StartTime"];
@@ -327,9 +384,14 @@ namespace WindowsFormsApp2
                     int start = Int32.Parse(temp);
                     temp = endTime.ToString("HH");
                     int end = Int32.Parse(temp);
+                    temp = endTime.ToString("mm");
+                    if (Int32.Parse(temp) > 0)
+                        end++;
+                    Console.WriteLine(row);
                     DisableSection1(start, end, listCell, row["Desc"].ToString(), row["ColorName"].ToString(), row["ForeColor"].ToString(), row);
                 }
             }
+        
             foreach (DataRow row in Table3.Rows)
             {
                 DateTime startTime = (DateTime)row["StartTime"];
@@ -341,6 +403,10 @@ namespace WindowsFormsApp2
                     int start = Int32.Parse(temp);
                     temp = endTime.ToString("HH");
                     int end = Int32.Parse(temp);
+                    // 如果分鐘數>0，進位一小時
+                    temp = endTime.ToString("mm");
+                    if (Int32.Parse(temp) > 0) 
+                        end++;
                     DisableSection1(start, end, listCell, row["Desc"].ToString(), row["ColorName"].ToString(), row["ForeColor"].ToString(), row);
                 }
             }
@@ -348,7 +414,6 @@ namespace WindowsFormsApp2
 
         private void DisableSection(int Start, int End, List<FlowLayoutPanel> listCell, string str,string BackColor,string ForeColor)
         {
-            Console.WriteLine(Start);
             for (int i = Start; i < End; i++)
             {
                 Label EventName = new System.Windows.Forms.Label();
@@ -359,14 +424,22 @@ namespace WindowsFormsApp2
                 // listCell[i - 9].BackColor = Color.Pink;
                 // listCell[i - 9].BackColor = Color.FromName(color);
                 // listCell[i - 9].Enabled = false;
-                listCell[i - 9].Controls.Add(EventName);
+                try
+                {
+                    listCell[i - 9].Controls.Add(EventName);
+                    listCell[i - 9].ContextMenuStrip = null;
+                }
+                catch (Exception ex)
+                {
+                    // MessageBox.Show(String.Format("{0} \r\n發生錯誤: {1} \r\n在程式: {2}\r\n錯誤資訊: {3}", DateTime.Now.ToString(), ex.Message, ex.Source, ex.StackTrace));
+                }
                 //listCell[i - 9].ContextMenuStrip = day_busy_MenuStrip;
             }
+
         }
 
         private void DisableSection1(int Start, int End, List<FlowLayoutPanel> listCell, String str, string BackColor, string ForeColor, DataRow dataRow)
         {
-            Console.WriteLine(Start);
             if (Start == End)
             {
                 //Label EventName = new System.Windows.Forms.Label();
@@ -378,24 +451,20 @@ namespace WindowsFormsApp2
                 //20201005
                 EventName.BackColor = Color.FromName(BackColor);
                 EventName.ForeColor = Color.FromName(ForeColor);
-                if (Start == 8)
-                {
-                    //listCell[0].BackColor = Color.Pink;
-                    //listCell[0].BackColor = Color.FromName(color);
-                    // listCell[i - 9].Enabled = false;
-                    listCell[0].Controls.Add(EventName);
-                    //listCell[0].ContextMenuStrip = day_busy_MenuStrip;
 
-                }
-                else
+                //listCell[Start - 9].BackColor = Color.Pink;
+                //listCell[Start - 9].BackColor = Color.FromName(color);
+                try
                 {
-                    //listCell[Start - 9].BackColor = Color.Pink;
-                    //listCell[Start - 9].BackColor = Color.FromName(color);
-                    // listCell[i - 9].Enabled = false;
                     listCell[Start - 9].Controls.Add(EventName);
-                    //listCell[Start - 9].ContextMenuStrip = day_busy_MenuStrip;
-
                 }
+                catch (Exception ex)
+                {
+                    // MessageBox.Show(String.Format("{0} \r\n發生錯誤: {1} \r\n在程式: {2}\r\n錯誤資訊: {3}", DateTime.Now.ToString(), ex.Message, ex.Source, ex.StackTrace));
+                }
+                //listCell[Start - 9].ContextMenuStrip = null;
+                //listCell[Start - 9].ContextMenuStrip = day_busy_MenuStrip;
+                Console.WriteLine("disableSection1 button added1");
             }
             else
             {
@@ -410,36 +479,33 @@ namespace WindowsFormsApp2
                     //20201005
                     EventName.BackColor= Color.FromName(BackColor);
                     EventName.ForeColor = Color.FromName(ForeColor);
-                    if (Start == 8)
+
+                    try
                     {
-                        //listCell[0].BackColor = Color.Pink;
-                        //listCell[0].BackColor = Color.FromName(color);
-                        // listCell[i - 9].Enabled = false;
-                        listCell[0].Controls.Add(EventName);
-                        //listCell[0].ContextMenuStrip = day_busy_MenuStrip;
-                    }
-                    else
-                    {
-                        //listCell[i - 9].BackColor = Color.Pink;
-                        //listCell[i - 9].BackColor = Color.FromName(color);
-                        // listCell[i - 9].Enabled = false;
                         listCell[i - 9].Controls.Add(EventName);
-                        //listCell[i - 9].ContextMenuStrip = day_busy_MenuStrip;
+                    }
+                    catch (Exception ex)
+                    {
+                        // MessageBox.Show(String.Format("{0} \r\n發生錯誤: {1} \r\n在程式: {2}\r\n錯誤資訊: {3}", DateTime.Now.ToString(), ex.Message, ex.Source, ex.StackTrace));
                     }
                 }
+                Console.WriteLine("disableSection1 button added2");
             }
         }
+
         private void Button_PrevDay_Click(object sender, EventArgs e)
         {
             DateTimePicker1.Value = DateTimePicker1.Value.AddDays(-1);
-            // Console.WriteLine(dateTimePicker1.Value.ToString());
+            dateTimePicker2.Value = DateTimePicker1.Value;
         }
 
         private void Button_NextDay_Click(object sender, EventArgs e)
         {
             DateTimePicker1.Value = DateTimePicker1.Value.AddDays(1);
+            dateTimePicker2.Value = DateTimePicker1.Value;
         }
 
+        /*
         private void day_add_ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             timer1.Stop();
@@ -449,7 +515,7 @@ namespace WindowsFormsApp2
             timer1.Interval = (refreshTime * 1000);
             timer1.Start();
         }
-
+        */
         private void DateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
             timer1.Stop();
@@ -457,6 +523,7 @@ namespace WindowsFormsApp2
             timer1.Interval = (refreshTime * 1000);
             timer1.Start();
         }
+
         public string agentid()
         {
             string rts = AgentID.Text;
@@ -476,10 +543,12 @@ namespace WindowsFormsApp2
             if (result == DialogResult.Yes)
             {
                 RefreshTable();
+                RefreshTable_Week();
             }
             timer1.Interval = (refreshTime * 1000);
             timer1.Start();
         }
+
         private void bt_Re_Click(object sender, EventArgs e)
         {
             timer1.Stop();
@@ -499,6 +568,7 @@ namespace WindowsFormsApp2
         {
             timer1.Stop();
             RefreshTable();
+            RefreshTable_Week();
             timer1.Interval = (refreshTime * 1000);
             timer1.Start();
         }
@@ -523,6 +593,9 @@ namespace WindowsFormsApp2
                 cb_Dept.DataSource = vSubDept;
                 cb_Dept.ValueMember = "SubDept_ID";
                 cb_Dept.DisplayMember = "SubDept";
+                cb_Dept1.DataSource = vSubDept;
+                cb_Dept1.ValueMember = "SubDept_ID";
+                cb_Dept1.DisplayMember = "SubDept";
                 var SubDept1 = (from o in dsAgent.Tables[0].AsEnumerable()
                                 orderby o["SubDept_ID"].ToString()
                                 where o["SubDept_ID"] != DBNull.Value
@@ -530,6 +603,7 @@ namespace WindowsFormsApp2
                 if ( comboboxck)
                 {
                     cb_Dept.SelectedValue = SubDept1.Where(a => a.AgentID == sAgentID).Select(a => a.SubDept_ID).DefaultIfEmpty("").FirstOrDefault();
+                    cb_Dept1.SelectedValue = cb_Dept.SelectedValue;
                 }
                 #endregion
                 cnn.Close();
@@ -543,35 +617,48 @@ namespace WindowsFormsApp2
         }
         private void SetComboBox_Squad()
         {
-
-            String connStr = "";
-            SqlConnection cnn;            
-            connStr = "Data Source=" + Global.strProgramIP + ";Initial Catalog=" + Global.strProgramDB + ";User ID=" + Global.strProgramUser + ";Password=" + Global.strProgramPass + ";";
-            cnn = new SqlConnection(connStr);
-            cnn.Open();
-            String sAgentID = AgentID.Text;
-            DataSet dsAgent = SqlHelper.ExecuteDataset(cnn, "xsp_AgentOrder_AgentList", new object[] { sAgentID });
-            string SubDept_ID = cb_Dept.SelectedValue.ToString();
-            #region Squad
-            var vSquad = (from o in dsAgent.Tables[0].AsEnumerable()
-                          orderby o["TeamID"].ToString()
-                          where o["TeamID"] != DBNull.Value && o["SubDept_ID"].ToString().Contains(SubDept_ID)
-                          select new { TeamID = o["TeamID"].ToString(), TeamName = o["TeamName"].ToString() }).Distinct().ToList();
-            vSquad.Insert(0, new { TeamID = "", TeamName = "全選" });
-            cb_Team.DataSource = vSquad;
-            cb_Team.ValueMember = "TeamID";
-            cb_Team.DisplayMember = "TeamName";
-            var vSquad1 = (from o in dsAgent.Tables[0].AsEnumerable()
-                           orderby o["TeamID"].ToString()
-                           where o["TeamID"] != DBNull.Value && o["SubDept_ID"].ToString().Contains(SubDept_ID)
-                           select new { TeamID = o["TeamID"].ToString(), AgentID = o["Agent_ID"].ToString() }).Distinct().ToList();
-            if ( comboboxck)
+            try
             {
-                cb_Team.SelectedValue = vSquad1.Where(a => a.AgentID == sAgentID).Select(a => a.TeamID).DefaultIfEmpty("").FirstOrDefault();
-            }
-            #endregion
+                String connStr = "";
+                SqlConnection cnn;
+                connStr = "Data Source=" + Global.strProgramIP + ";Initial Catalog=" + Global.strProgramDB + ";User ID=" + Global.strProgramUser + ";Password=" + Global.strProgramPass + ";";
+                cnn = new SqlConnection(connStr);
+                cnn.Open();
+                String sAgentID = AgentID.Text;
+                DataSet dsAgent = SqlHelper.ExecuteDataset(cnn, "xsp_AgentOrder_AgentList", new object[] { sAgentID });
+                string SubDept_ID = cb_Dept.SelectedValue.ToString();
+                #region Squad
+                var vSquad = (from o in dsAgent.Tables[0].AsEnumerable()
+                              orderby o["TeamID"].ToString()
+                              where o["TeamID"] != DBNull.Value && o["SubDept_ID"].ToString().Contains(SubDept_ID)
+                              select new { TeamID = o["TeamID"].ToString(), TeamName = o["TeamName"].ToString() }).Distinct().ToList();
+                vSquad.Insert(0, new { TeamID = "", TeamName = "全選" });
+                cb_Team.DataSource = vSquad;
+                cb_Team1.DataSource = vSquad;
+                cb_Team.ValueMember = "TeamID";
+                cb_Team1.ValueMember = "TeamID";
+                cb_Team.DisplayMember = "TeamName";
+                cb_Team1.DisplayMember = "TeamName";
+                var vSquad1 = (from o in dsAgent.Tables[0].AsEnumerable()
+                               orderby o["TeamID"].ToString()
+                               where o["TeamID"] != DBNull.Value && o["SubDept_ID"].ToString().Contains(SubDept_ID)
+                               select new { TeamID = o["TeamID"].ToString(), AgentID = o["Agent_ID"].ToString() }).Distinct().ToList();
+                if (comboboxck)
+                {
+                    cb_Team.SelectedValue = vSquad1.Where(a => a.AgentID == sAgentID).Select(a => a.TeamID).DefaultIfEmpty("").FirstOrDefault();
+                    cb_Team1.SelectedValue = cb_Team.SelectedValue;
+                }
+                #endregion
 
-            cnn.Close();
+                cnn.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Connection failed!");
+                this.Close();
+            }
+
+
         }
         private void SetComboBox_Agent()
         {
@@ -591,18 +678,23 @@ namespace WindowsFormsApp2
                           where o["TeamID"].ToString().Contains(TeamID) && o["SubDept_ID"].ToString().Contains(SubDept_ID)
                           select new { AgentID = o["Agent_ID"].ToString(), AgentName = o["Account_Name"].ToString() }).Distinct().ToList();
             cb_Agent.DataSource = vAgent;
+            cb_Agent1.DataSource = vAgent;
             cb_Agent.ValueMember = "AgentID";
             cb_Agent.DisplayMember = "AgentName";
+            cb_Agent1.ValueMember = "AgentID";
+            cb_Agent1.DisplayMember = "AgentName";
             if (comboboxck)
             {
                 string ck = vAgent.Where(a => a.AgentID == sAgentID).Select(a => a.AgentID).DefaultIfEmpty("").FirstOrDefault();
                 if (ck == "")
                 {
                     cb_Agent.SelectedIndex = 0;
+                    cb_Agent1.SelectedIndex = 0;
                 }
                 else
                 {
                     cb_Agent.SelectedValue = ck;
+                    cb_Agent1.SelectedValue = ck;
                 }
             }
             #endregion
@@ -627,6 +719,238 @@ namespace WindowsFormsApp2
         private void cb_Squad_SelectedIndexChanged(object sender, EventArgs e)
         {
             SetComboBox_Agent();
+        }
+
+        private void NewTaskItem_Click(object sender, EventArgs e)
+        {
+            timer1.Stop();
+            frm_Calendar_Add frm_Calendar_Add = new frm_Calendar_Add(this);
+            frm_Calendar_Add.ShowDialog();
+            RefreshTable();
+            RefreshTable_Week();
+            timer1.Interval = (refreshTime * 1000);
+            timer1.Start();
+        }
+
+        private void EnablePanel_Week(int index)
+        {
+            listCellWeek[index].BackColor = Color.Transparent;
+            //listCellWeek[index].Enabled = true;
+        }
+
+        private void DisablePanel_Week(int index)
+        {
+            listCellWeek[index].BackColor = Color.DimGray;
+            Label DayOffLabel = new Label();
+            DayOffLabel.Text = "公休日";
+            DayOffLabel.Font = new System.Drawing.Font("微軟正黑體", 18F);
+            DayOffLabel.AutoSize = true;
+            listCellWeek[index].Controls.Add(DayOffLabel);
+            Console.WriteLine("im in disable week");
+            
+        }
+
+
+        private bool DayOffOrNot_Week(int index, DateTime DateToday, DataTable Table)
+        {           
+            foreach (DataRow row in Table.Rows)
+            {
+                string HolidayDate = row[1].ToString();
+
+                if (DateToday.ToString("yyyy-MM-dd") == DateTime.Parse(HolidayDate).ToString("yyyy-MM-dd"))
+                {
+                    Console.WriteLine("table disabled on");
+                    Console.WriteLine(DateToday.ToString("yyyy-MM-dd"));
+                    //LabelDayOff.Visible = true;
+                    //LabelDayOff.Text = row[0].ToString();
+                    //MessageBox.Show("公休日");
+
+                    // today is day off
+                    return false;
+                }
+                else if (row == Table.Rows[Table.Rows.Count - 1])
+                {
+                    // today is on duty
+                    EnablePanel_Week(index);
+                }
+            }
+            return true;
+        }
+
+        private void EnableTable_Week()
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                listCellWeek[i].BackColor = Color.Transparent;
+                listCellWeek[i].Enabled = true;
+                listCellWeek[i].Controls.Clear();
+                listCellWeek[i].ContextMenuStrip = NewTaskMenu;
+            }
+        }
+
+        private void RefreshTable_Week()
+        {
+            refresh_Week();
+            #region initial tab2
+            lb_wd1.Text = dateTimePicker2.Value.ToString("yyyy/MM/dd ddd");
+            lb_wd2.Text = dateTimePicker2.Value.AddDays(1).ToString("yyyy/MM/dd ddd");
+            lb_wd3.Text = dateTimePicker2.Value.AddDays(2).ToString("yyyy/MM/dd ddd");
+            lb_wd4.Text = dateTimePicker2.Value.AddDays(3).ToString("yyyy/MM/dd ddd");
+            lb_wd5.Text = dateTimePicker2.Value.AddDays(4).ToString("yyyy/MM/dd ddd");
+            lb_wd6.Text = dateTimePicker2.Value.AddDays(5).ToString("yyyy/MM/dd ddd");
+            lb_wd7.Text = dateTimePicker2.Value.AddDays(6).ToString("yyyy/MM/dd ddd");
+            #endregion
+
+            EnableTable_Week();
+            for (int i = 0; i < 7; i++)
+            {
+                if (DayOffOrNot_Week(i, dateTimePicker2.Value.AddDays(i), Table_Holiday))
+                {
+                    Console.WriteLine(dateTimePicker2.Value.AddDays(i));
+                    EnablePanel_Week(i);
+
+                    // personal holidays, activities
+                    SectionOffOrNot_Week(i, dateTimePicker2.Value.AddDays(i), Table_Holiday_Per, Table_Personal, Table_Activity);
+                }
+                else
+                {
+                    DisablePanel_Week(i);
+                }
+            }
+        }
+
+        private void DisableSection_Week(int index, int Start, int End, List<FlowLayoutPanel> listCellWeek, string str, string BackColor, string ForeColor)
+        {
+            Label EventName = new System.Windows.Forms.Label();
+            EventName.Text = str;
+            EventName.BackColor = Color.FromName(BackColor);
+            EventName.ForeColor = Color.FromName(ForeColor);
+
+            try
+            {
+                listCellWeek[index].Controls.Add(EventName);
+                listCellWeek[index].ContextMenuStrip = null;
+            }
+            catch (Exception ex)
+            {
+                // MessageBox.Show(String.Format("{0} \r\n發生錯誤: {1} \r\n在程式: {2}\r\n錯誤資訊: {3}", DateTime.Now.ToString(), ex.Message, ex.Source, ex.StackTrace));
+            }
+        }
+
+        private void DisableSection1_Week(int index, int Start, int End, List<FlowLayoutPanel> listCellWeek, String str, string BackColor, string ForeColor, DataRow dataRow)
+        {
+            //Label EventName = new System.Windows.Forms.Label();
+            Button EventName = new Button();
+            EventName.Text = str;
+            EventName.AutoSize = true;
+            //20201005 暫時隱藏 正式環境有新動作
+            EventName.Click += (sender, e) => buttonclick(dataRow);
+            //20201005
+            EventName.BackColor = Color.FromName(BackColor);
+            EventName.ForeColor = Color.FromName(ForeColor);
+
+            try
+            {
+                listCellWeek[index].Controls.Add(EventName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(String.Format("{0} \r\n發生錯誤: {1} \r\n在程式: {2}\r\n錯誤資訊: {3}", DateTime.Now.ToString(), ex.Message, ex.Source, ex.StackTrace));
+            }
+                
+        Console.WriteLine("disableSection1 button added2");
+            
+        }
+
+        private void SectionOffOrNot_Week(int index, DateTime DateToday, DataTable Table1, DataTable Table2, DataTable Table3)
+        {
+            ShowTable(Table1);
+            ShowTable(Table2);
+            ShowTable(Table3);
+
+            foreach (DataRow row in Table1.Rows)
+            {
+                DateTime startTime = (DateTime)row["StartTime"];
+                DateTime endTime = (DateTime)row["EndTime"];
+                String OffDate = startTime.ToShortDateString();
+                if (DateToday.ToShortDateString() == OffDate)
+                {
+                    String temp = startTime.ToString("HH");
+                    int start = Int32.Parse(temp);
+                    temp = endTime.ToString("HH");
+                    int end = Int32.Parse(temp);
+                    DisableSection_Week(index, start, end, listCellWeek, row["Desc"].ToString(), row["ColorName"].ToString(), row["ForeColor"].ToString());
+                    break;
+                }
+            }
+
+            foreach (DataRow row in Table2.Rows)
+            {
+                DateTime startTime = (DateTime)row["StartTime"];
+                DateTime endTime = (DateTime)row["EndTime"];
+                String OffDate = startTime.ToShortDateString();
+                if (DateToday.ToShortDateString() == OffDate)
+                {
+                    String temp = startTime.ToString("HH");
+                    int start = Int32.Parse(temp);
+                    temp = endTime.ToString("HH");
+                    int end = Int32.Parse(temp);
+                    temp = endTime.ToString("mm");
+                    if (Int32.Parse(temp) > 0)
+                        end++;
+                    DisableSection1_Week(index, start, end, listCellWeek, row["Desc"].ToString(), row["ColorName"].ToString(), row["ForeColor"].ToString(), row);
+                }
+            }
+
+            foreach (DataRow row in Table3.Rows)
+            {
+                DateTime startTime = (DateTime)row["StartTime"];
+                DateTime endTime = (DateTime)row["EndTime"];
+                String OffDate = startTime.ToShortDateString();
+                if (DateToday.ToShortDateString() == OffDate)
+                {
+                    String temp = startTime.ToString("HH");
+                    int start = Int32.Parse(temp);
+                    temp = endTime.ToString("HH");
+                    int end = Int32.Parse(temp);
+                    // 如果分鐘數>0，進位一小時
+                    temp = endTime.ToString("mm");
+                    if (Int32.Parse(temp) > 0)
+                        end++;
+                    DisableSection1_Week(index, start, end, listCellWeek, row["Desc"].ToString(), row["ColorName"].ToString(), row["ForeColor"].ToString(), row);
+                }
+            }
+        }
+
+
+        private void DayOrWeek_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            // weekly selected
+            if (e.TabPageIndex == 1)
+            {
+                RefreshTable_Week();
+            }
+
+        }
+
+        private void Button_LastWeek_Click(object sender, EventArgs e)
+        {
+            dateTimePicker2.Value = dateTimePicker2.Value.AddDays(-7);
+            DateTimePicker1.Value = dateTimePicker2.Value;
+        }
+
+        private void Button_NextWeek_Click(object sender, EventArgs e)
+        {
+            dateTimePicker2.Value = dateTimePicker2.Value.AddDays(7);
+            DateTimePicker1.Value = dateTimePicker2.Value;
+        }
+
+        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
+        {
+            timer1.Stop();
+            RefreshTable_Week();
+            timer1.Interval = (refreshTime * 1000);
+            timer1.Start();
         }
 
     }

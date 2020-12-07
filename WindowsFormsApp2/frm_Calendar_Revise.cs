@@ -55,16 +55,9 @@ namespace WindowsFormsApp2
 
             if (dataRow["Editable"].ToString() != "1")
             {
-                Bt_Delete.Visible = false;
-                Bt_Re.Visible = false;
+                //Bt_Delete.Visible = false;
+                //Bt_Re.Visible = false;
             }
-
-
-
-
-
-
-
 
         }
         public class Data_P

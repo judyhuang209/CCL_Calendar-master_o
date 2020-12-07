@@ -60,6 +60,8 @@
             this.section20_21 = new System.Windows.Forms.Label();
             this.section9_10 = new System.Windows.Forms.Label();
             this.Cell9 = new System.Windows.Forms.FlowLayoutPanel();
+            this.NewTaskMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.NewTaskItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Cell10 = new System.Windows.Forms.FlowLayoutPanel();
             this.Cell11 = new System.Windows.Forms.FlowLayoutPanel();
             this.Cell12 = new System.Windows.Forms.FlowLayoutPanel();
@@ -80,27 +82,35 @@
             this.lb_wd5 = new System.Windows.Forms.Label();
             this.lb_wd6 = new System.Windows.Forms.Label();
             this.lb_wd7 = new System.Windows.Forms.Label();
+            this.CellWeekday1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.CellWeekday2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.CellWeekday3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.CellWeekday4 = new System.Windows.Forms.FlowLayoutPanel();
+            this.CellWeekday5 = new System.Windows.Forms.FlowLayoutPanel();
+            this.CellWeekday6 = new System.Windows.Forms.FlowLayoutPanel();
+            this.CellWeekday7 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.bt_Re1 = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.cb_Agent1 = new System.Windows.Forms.ComboBox();
+            this.cb_Team1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.cb_Dept1 = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnSearch1 = new System.Windows.Forms.Button();
+            this.Button_LastWeek = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.button4 = new System.Windows.Forms.Button();
+            this.Button_NextWeek = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.DayOrWeek.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.NewTaskMenu.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -119,6 +129,7 @@
             this.DayOrWeek.SelectedIndex = 0;
             this.DayOrWeek.Size = new System.Drawing.Size(1177, 551);
             this.DayOrWeek.TabIndex = 2;
+            this.DayOrWeek.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.DayOrWeek_Selecting);
             // 
             // tabPage1
             // 
@@ -567,7 +578,7 @@
             // 
             this.Cell9.AutoScroll = true;
             this.Cell9.AutoSize = true;
-            this.Cell9.BackColor = System.Drawing.Color.Transparent;
+            this.Cell9.ContextMenuStrip = this.NewTaskMenu;
             this.Cell9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Cell9.Font = new System.Drawing.Font("微軟正黑體", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.Cell9.Location = new System.Drawing.Point(192, 3);
@@ -577,10 +588,28 @@
             this.Cell9.Size = new System.Drawing.Size(944, 100);
             this.Cell9.TabIndex = 2;
             // 
+            // NewTaskMenu
+            // 
+            this.NewTaskMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.NewTaskMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.NewTaskItem});
+            this.NewTaskMenu.Name = "NewTaskMenu";
+            this.NewTaskMenu.Size = new System.Drawing.Size(139, 44);
+            // 
+            // NewTaskItem
+            // 
+            this.NewTaskItem.AutoSize = false;
+            this.NewTaskItem.Font = new System.Drawing.Font("Microsoft JhengHei UI", 16F);
+            this.NewTaskItem.Name = "NewTaskItem";
+            this.NewTaskItem.Size = new System.Drawing.Size(210, 40);
+            this.NewTaskItem.Text = "新增";
+            this.NewTaskItem.Click += new System.EventHandler(this.NewTaskItem_Click);
+            // 
             // Cell10
             // 
             this.Cell10.AutoScroll = true;
             this.Cell10.AutoSize = true;
+            this.Cell10.ContextMenuStrip = this.NewTaskMenu;
             this.Cell10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Cell10.Font = new System.Drawing.Font("微軟正黑體", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.Cell10.Location = new System.Drawing.Point(192, 108);
@@ -594,6 +623,7 @@
             // 
             this.Cell11.AutoScroll = true;
             this.Cell11.AutoSize = true;
+            this.Cell11.ContextMenuStrip = this.NewTaskMenu;
             this.Cell11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Cell11.Font = new System.Drawing.Font("微軟正黑體", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.Cell11.Location = new System.Drawing.Point(192, 213);
@@ -607,6 +637,7 @@
             // 
             this.Cell12.AutoScroll = true;
             this.Cell12.AutoSize = true;
+            this.Cell12.ContextMenuStrip = this.NewTaskMenu;
             this.Cell12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Cell12.Font = new System.Drawing.Font("微軟正黑體", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.Cell12.Location = new System.Drawing.Point(192, 318);
@@ -620,6 +651,7 @@
             // 
             this.Cell13.AutoScroll = true;
             this.Cell13.AutoSize = true;
+            this.Cell13.ContextMenuStrip = this.NewTaskMenu;
             this.Cell13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Cell13.Font = new System.Drawing.Font("微軟正黑體", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.Cell13.Location = new System.Drawing.Point(192, 423);
@@ -633,6 +665,7 @@
             // 
             this.Cell14.AutoScroll = true;
             this.Cell14.AutoSize = true;
+            this.Cell14.ContextMenuStrip = this.NewTaskMenu;
             this.Cell14.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Cell14.Font = new System.Drawing.Font("微軟正黑體", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.Cell14.Location = new System.Drawing.Point(192, 528);
@@ -646,6 +679,7 @@
             // 
             this.Cell15.AutoScroll = true;
             this.Cell15.AutoSize = true;
+            this.Cell15.ContextMenuStrip = this.NewTaskMenu;
             this.Cell15.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Cell15.Font = new System.Drawing.Font("微軟正黑體", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.Cell15.Location = new System.Drawing.Point(192, 633);
@@ -659,6 +693,7 @@
             // 
             this.Cell16.AutoScroll = true;
             this.Cell16.AutoSize = true;
+            this.Cell16.ContextMenuStrip = this.NewTaskMenu;
             this.Cell16.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Cell16.Font = new System.Drawing.Font("微軟正黑體", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.Cell16.Location = new System.Drawing.Point(192, 738);
@@ -672,6 +707,7 @@
             // 
             this.Cell17.AutoScroll = true;
             this.Cell17.AutoSize = true;
+            this.Cell17.ContextMenuStrip = this.NewTaskMenu;
             this.Cell17.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Cell17.Font = new System.Drawing.Font("微軟正黑體", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.Cell17.Location = new System.Drawing.Point(192, 843);
@@ -685,6 +721,7 @@
             // 
             this.Cell18.AutoScroll = true;
             this.Cell18.AutoSize = true;
+            this.Cell18.ContextMenuStrip = this.NewTaskMenu;
             this.Cell18.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Cell18.Font = new System.Drawing.Font("微軟正黑體", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.Cell18.Location = new System.Drawing.Point(192, 948);
@@ -698,6 +735,7 @@
             // 
             this.Cell19.AutoScroll = true;
             this.Cell19.AutoSize = true;
+            this.Cell19.ContextMenuStrip = this.NewTaskMenu;
             this.Cell19.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Cell19.Font = new System.Drawing.Font("微軟正黑體", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.Cell19.Location = new System.Drawing.Point(192, 1053);
@@ -711,6 +749,7 @@
             // 
             this.Cell20.AutoScroll = true;
             this.Cell20.AutoSize = true;
+            this.Cell20.ContextMenuStrip = this.NewTaskMenu;
             this.Cell20.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Cell20.Font = new System.Drawing.Font("微軟正黑體", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.Cell20.Location = new System.Drawing.Point(192, 1158);
@@ -754,6 +793,13 @@
             this.tableLayoutPanel2.Controls.Add(this.lb_wd5, 4, 0);
             this.tableLayoutPanel2.Controls.Add(this.lb_wd6, 5, 0);
             this.tableLayoutPanel2.Controls.Add(this.lb_wd7, 6, 0);
+            this.tableLayoutPanel2.Controls.Add(this.CellWeekday1, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.CellWeekday2, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.CellWeekday3, 2, 1);
+            this.tableLayoutPanel2.Controls.Add(this.CellWeekday4, 3, 1);
+            this.tableLayoutPanel2.Controls.Add(this.CellWeekday5, 4, 1);
+            this.tableLayoutPanel2.Controls.Add(this.CellWeekday6, 5, 1);
+            this.tableLayoutPanel2.Controls.Add(this.CellWeekday7, 6, 1);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 127);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
@@ -776,7 +822,7 @@
             // 
             this.lb_wd2.AutoSize = true;
             this.lb_wd2.Font = new System.Drawing.Font("微軟正黑體", 16F);
-            this.lb_wd2.Location = new System.Drawing.Point(153, 1);
+            this.lb_wd2.Location = new System.Drawing.Point(177, 1);
             this.lb_wd2.Name = "lb_wd2";
             this.lb_wd2.Size = new System.Drawing.Size(142, 34);
             this.lb_wd2.TabIndex = 0;
@@ -786,7 +832,7 @@
             // 
             this.lb_wd3.AutoSize = true;
             this.lb_wd3.Font = new System.Drawing.Font("微軟正黑體", 16F);
-            this.lb_wd3.Location = new System.Drawing.Point(302, 1);
+            this.lb_wd3.Location = new System.Drawing.Point(350, 1);
             this.lb_wd3.Name = "lb_wd3";
             this.lb_wd3.Size = new System.Drawing.Size(142, 34);
             this.lb_wd3.TabIndex = 0;
@@ -796,7 +842,7 @@
             // 
             this.lb_wd4.AutoSize = true;
             this.lb_wd4.Font = new System.Drawing.Font("微軟正黑體", 16F);
-            this.lb_wd4.Location = new System.Drawing.Point(451, 1);
+            this.lb_wd4.Location = new System.Drawing.Point(523, 1);
             this.lb_wd4.Name = "lb_wd4";
             this.lb_wd4.Size = new System.Drawing.Size(142, 34);
             this.lb_wd4.TabIndex = 0;
@@ -806,7 +852,7 @@
             // 
             this.lb_wd5.AutoSize = true;
             this.lb_wd5.Font = new System.Drawing.Font("微軟正黑體", 16F);
-            this.lb_wd5.Location = new System.Drawing.Point(600, 1);
+            this.lb_wd5.Location = new System.Drawing.Point(696, 1);
             this.lb_wd5.Name = "lb_wd5";
             this.lb_wd5.Size = new System.Drawing.Size(142, 34);
             this.lb_wd5.TabIndex = 0;
@@ -816,7 +862,7 @@
             // 
             this.lb_wd6.AutoSize = true;
             this.lb_wd6.Font = new System.Drawing.Font("微軟正黑體", 16F);
-            this.lb_wd6.Location = new System.Drawing.Point(749, 1);
+            this.lb_wd6.Location = new System.Drawing.Point(869, 1);
             this.lb_wd6.Name = "lb_wd6";
             this.lb_wd6.Size = new System.Drawing.Size(142, 34);
             this.lb_wd6.TabIndex = 0;
@@ -826,11 +872,81 @@
             // 
             this.lb_wd7.AutoSize = true;
             this.lb_wd7.Font = new System.Drawing.Font("微軟正黑體", 16F);
-            this.lb_wd7.Location = new System.Drawing.Point(898, 1);
+            this.lb_wd7.Location = new System.Drawing.Point(1042, 1);
             this.lb_wd7.Name = "lb_wd7";
             this.lb_wd7.Size = new System.Drawing.Size(142, 34);
             this.lb_wd7.TabIndex = 0;
             this.lb_wd7.Text = "weekday7";
+            // 
+            // CellWeekday1
+            // 
+            this.CellWeekday1.AutoScroll = true;
+            this.CellWeekday1.AutoSize = true;
+            this.CellWeekday1.Location = new System.Drawing.Point(4, 39);
+            this.CellWeekday1.MinimumSize = new System.Drawing.Size(166, 325);
+            this.CellWeekday1.Name = "CellWeekday1";
+            this.CellWeekday1.Size = new System.Drawing.Size(166, 325);
+            this.CellWeekday1.TabIndex = 1;
+            // 
+            // CellWeekday2
+            // 
+            this.CellWeekday2.AutoScroll = true;
+            this.CellWeekday2.AutoSize = true;
+            this.CellWeekday2.Location = new System.Drawing.Point(177, 39);
+            this.CellWeekday2.MinimumSize = new System.Drawing.Size(166, 325);
+            this.CellWeekday2.Name = "CellWeekday2";
+            this.CellWeekday2.Size = new System.Drawing.Size(166, 325);
+            this.CellWeekday2.TabIndex = 2;
+            // 
+            // CellWeekday3
+            // 
+            this.CellWeekday3.AutoScroll = true;
+            this.CellWeekday3.AutoSize = true;
+            this.CellWeekday3.Location = new System.Drawing.Point(350, 39);
+            this.CellWeekday3.MinimumSize = new System.Drawing.Size(166, 325);
+            this.CellWeekday3.Name = "CellWeekday3";
+            this.CellWeekday3.Size = new System.Drawing.Size(166, 325);
+            this.CellWeekday3.TabIndex = 3;
+            // 
+            // CellWeekday4
+            // 
+            this.CellWeekday4.AutoScroll = true;
+            this.CellWeekday4.AutoSize = true;
+            this.CellWeekday4.Location = new System.Drawing.Point(523, 39);
+            this.CellWeekday4.MinimumSize = new System.Drawing.Size(166, 325);
+            this.CellWeekday4.Name = "CellWeekday4";
+            this.CellWeekday4.Size = new System.Drawing.Size(166, 325);
+            this.CellWeekday4.TabIndex = 4;
+            // 
+            // CellWeekday5
+            // 
+            this.CellWeekday5.AutoScroll = true;
+            this.CellWeekday5.AutoSize = true;
+            this.CellWeekday5.Location = new System.Drawing.Point(696, 39);
+            this.CellWeekday5.MinimumSize = new System.Drawing.Size(166, 325);
+            this.CellWeekday5.Name = "CellWeekday5";
+            this.CellWeekday5.Size = new System.Drawing.Size(166, 325);
+            this.CellWeekday5.TabIndex = 5;
+            // 
+            // CellWeekday6
+            // 
+            this.CellWeekday6.AutoScroll = true;
+            this.CellWeekday6.AutoSize = true;
+            this.CellWeekday6.Location = new System.Drawing.Point(869, 39);
+            this.CellWeekday6.MinimumSize = new System.Drawing.Size(166, 325);
+            this.CellWeekday6.Name = "CellWeekday6";
+            this.CellWeekday6.Size = new System.Drawing.Size(166, 325);
+            this.CellWeekday6.TabIndex = 6;
+            // 
+            // CellWeekday7
+            // 
+            this.CellWeekday7.AutoScroll = true;
+            this.CellWeekday7.AutoSize = true;
+            this.CellWeekday7.Location = new System.Drawing.Point(1042, 39);
+            this.CellWeekday7.MinimumSize = new System.Drawing.Size(166, 325);
+            this.CellWeekday7.Name = "CellWeekday7";
+            this.CellWeekday7.Size = new System.Drawing.Size(166, 325);
+            this.CellWeekday7.TabIndex = 7;
             // 
             // panel3
             // 
@@ -838,74 +954,76 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel3.AutoScroll = true;
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Controls.Add(this.button1);
+            this.panel3.Controls.Add(this.bt_Re1);
             this.panel3.Controls.Add(this.panel4);
-            this.panel3.Controls.Add(this.button3);
+            this.panel3.Controls.Add(this.Button_LastWeek);
             this.panel3.Controls.Add(this.textBox1);
             this.panel3.Controls.Add(this.label7);
             this.panel3.Controls.Add(this.dateTimePicker2);
-            this.panel3.Controls.Add(this.button4);
+            this.panel3.Controls.Add(this.Button_NextWeek);
             this.panel3.Location = new System.Drawing.Point(3, 5);
             this.panel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1163, 118);
             this.panel3.TabIndex = 2;
             // 
-            // button1
+            // bt_Re1
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button1.Font = new System.Drawing.Font("微軟正黑體", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button1.Location = new System.Drawing.Point(744, 2);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 49);
-            this.button1.TabIndex = 44;
-            this.button1.Text = "刷新";
-            this.button1.UseVisualStyleBackColor = false;
+            this.bt_Re1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.bt_Re1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.bt_Re1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.bt_Re1.Font = new System.Drawing.Font("微軟正黑體", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.bt_Re1.Location = new System.Drawing.Point(744, 2);
+            this.bt_Re1.Margin = new System.Windows.Forms.Padding(4);
+            this.bt_Re1.Name = "bt_Re1";
+            this.bt_Re1.Size = new System.Drawing.Size(100, 49);
+            this.bt_Re1.TabIndex = 44;
+            this.bt_Re1.Text = "刷新";
+            this.bt_Re1.UseVisualStyleBackColor = false;
+            this.bt_Re1.Click += new System.EventHandler(this.bt_Re_Click);
             // 
             // panel4
             // 
             this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.panel4.BackColor = System.Drawing.Color.White;
-            this.panel4.Controls.Add(this.comboBox1);
-            this.panel4.Controls.Add(this.comboBox2);
+            this.panel4.Controls.Add(this.cb_Agent1);
+            this.panel4.Controls.Add(this.cb_Team1);
             this.panel4.Controls.Add(this.label1);
             this.panel4.Controls.Add(this.label2);
-            this.panel4.Controls.Add(this.comboBox3);
+            this.panel4.Controls.Add(this.cb_Dept1);
             this.panel4.Controls.Add(this.label3);
-            this.panel4.Controls.Add(this.button2);
+            this.panel4.Controls.Add(this.btnSearch1);
             this.panel4.Location = new System.Drawing.Point(9, 55);
             this.panel4.Margin = new System.Windows.Forms.Padding(4);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1147, 58);
             this.panel4.TabIndex = 43;
             // 
-            // comboBox1
+            // cb_Agent1
             // 
-            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(615, 9);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(219, 33);
-            this.comboBox1.TabIndex = 39;
+            this.cb_Agent1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cb_Agent1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_Agent1.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.cb_Agent1.FormattingEnabled = true;
+            this.cb_Agent1.Location = new System.Drawing.Point(615, 9);
+            this.cb_Agent1.Margin = new System.Windows.Forms.Padding(4);
+            this.cb_Agent1.Name = "cb_Agent1";
+            this.cb_Agent1.Size = new System.Drawing.Size(219, 33);
+            this.cb_Agent1.TabIndex = 39;
             // 
-            // comboBox2
+            // cb_Team1
             // 
-            this.comboBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(336, 9);
-            this.comboBox2.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(219, 33);
-            this.comboBox2.TabIndex = 44;
+            this.cb_Team1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cb_Team1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_Team1.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.cb_Team1.FormattingEnabled = true;
+            this.cb_Team1.Location = new System.Drawing.Point(336, 9);
+            this.cb_Team1.Margin = new System.Windows.Forms.Padding(4);
+            this.cb_Team1.Name = "cb_Team1";
+            this.cb_Team1.Size = new System.Drawing.Size(219, 33);
+            this.cb_Team1.TabIndex = 44;
+            this.cb_Team1.SelectedIndexChanged += new System.EventHandler(this.cb_Squad_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -933,17 +1051,18 @@
             this.label2.TabIndex = 42;
             this.label2.Text = "小隊";
             // 
-            // comboBox3
+            // cb_Dept1
             // 
-            this.comboBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox3.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(56, 9);
-            this.comboBox3.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(219, 33);
-            this.comboBox3.TabIndex = 41;
+            this.cb_Dept1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cb_Dept1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_Dept1.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.cb_Dept1.FormattingEnabled = true;
+            this.cb_Dept1.Location = new System.Drawing.Point(56, 9);
+            this.cb_Dept1.Margin = new System.Windows.Forms.Padding(4);
+            this.cb_Dept1.Name = "cb_Dept1";
+            this.cb_Dept1.Size = new System.Drawing.Size(219, 33);
+            this.cb_Dept1.TabIndex = 41;
+            this.cb_Dept1.SelectedIndexChanged += new System.EventHandler(this.cb_Dept_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -958,33 +1077,35 @@
             this.label3.TabIndex = 38;
             this.label3.Text = "部門";
             // 
-            // button2
+            // btnSearch1
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button2.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button2.Location = new System.Drawing.Point(843, 10);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 36);
-            this.button2.TabIndex = 40;
-            this.button2.Text = "查詢";
-            this.button2.UseVisualStyleBackColor = false;
+            this.btnSearch1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSearch1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnSearch1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnSearch1.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnSearch1.Location = new System.Drawing.Point(843, 10);
+            this.btnSearch1.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSearch1.Name = "btnSearch1";
+            this.btnSearch1.Size = new System.Drawing.Size(100, 36);
+            this.btnSearch1.TabIndex = 40;
+            this.btnSearch1.Text = "查詢";
+            this.btnSearch1.UseVisualStyleBackColor = false;
+            this.btnSearch1.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // button3
+            // Button_LastWeek
             // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button_LastWeek.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.button3.AutoSize = true;
-            this.button3.Font = new System.Drawing.Font("微軟正黑體", 10F, System.Drawing.FontStyle.Bold);
-            this.button3.Location = new System.Drawing.Point(213, 2);
-            this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(61, 44);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "<<";
-            this.button3.UseVisualStyleBackColor = true;
+            this.Button_LastWeek.AutoSize = true;
+            this.Button_LastWeek.Font = new System.Drawing.Font("微軟正黑體", 10F, System.Drawing.FontStyle.Bold);
+            this.Button_LastWeek.Location = new System.Drawing.Point(213, 2);
+            this.Button_LastWeek.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Button_LastWeek.Name = "Button_LastWeek";
+            this.Button_LastWeek.Size = new System.Drawing.Size(61, 44);
+            this.Button_LastWeek.TabIndex = 1;
+            this.Button_LastWeek.Text = "<<";
+            this.Button_LastWeek.UseVisualStyleBackColor = true;
+            this.Button_LastWeek.Click += new System.EventHandler(this.Button_LastWeek_Click);
             // 
             // textBox1
             // 
@@ -1024,19 +1145,21 @@
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(237, 41);
             this.dateTimePicker2.TabIndex = 2;
+            this.dateTimePicker2.ValueChanged += new System.EventHandler(this.dateTimePicker2_ValueChanged);
             // 
-            // button4
+            // Button_NextWeek
             // 
-            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Button_NextWeek.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.button4.Font = new System.Drawing.Font("微軟正黑體", 10F, System.Drawing.FontStyle.Bold);
-            this.button4.Location = new System.Drawing.Point(520, 2);
-            this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(57, 44);
-            this.button4.TabIndex = 1;
-            this.button4.Text = ">>";
-            this.button4.UseVisualStyleBackColor = true;
+            this.Button_NextWeek.Font = new System.Drawing.Font("微軟正黑體", 10F, System.Drawing.FontStyle.Bold);
+            this.Button_NextWeek.Location = new System.Drawing.Point(520, 2);
+            this.Button_NextWeek.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Button_NextWeek.Name = "Button_NextWeek";
+            this.Button_NextWeek.Size = new System.Drawing.Size(57, 44);
+            this.Button_NextWeek.TabIndex = 1;
+            this.Button_NextWeek.Text = ">>";
+            this.Button_NextWeek.UseVisualStyleBackColor = true;
+            this.Button_NextWeek.Click += new System.EventHandler(this.Button_NextWeek_Click);
             // 
             // timer1
             // 
@@ -1061,6 +1184,7 @@
             this.panel2.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.NewTaskMenu.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
@@ -1077,7 +1201,7 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label LabelDayOff;
-        private System.Windows.Forms.DateTimePicker DateTimePicker1;
+        public System.Windows.Forms.DateTimePicker DateTimePicker1;
         private System.Windows.Forms.Button Button_NextDay;
         private System.Windows.Forms.Button Button_PrevDay;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
@@ -1118,20 +1242,20 @@
         private System.Windows.Forms.Button bt_Re;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button bt_Re1;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cb_Agent1;
+        private System.Windows.Forms.ComboBox cb_Team1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox cb_Dept1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnSearch1;
+        private System.Windows.Forms.Button Button_LastWeek;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button Button_NextWeek;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label lb_wd1;
         private System.Windows.Forms.Label lb_wd2;
@@ -1140,5 +1264,14 @@
         private System.Windows.Forms.Label lb_wd5;
         private System.Windows.Forms.Label lb_wd6;
         private System.Windows.Forms.Label lb_wd7;
+        private System.Windows.Forms.ContextMenuStrip NewTaskMenu;
+        private System.Windows.Forms.ToolStripMenuItem NewTaskItem;
+        private System.Windows.Forms.FlowLayoutPanel CellWeekday1;
+        private System.Windows.Forms.FlowLayoutPanel CellWeekday2;
+        private System.Windows.Forms.FlowLayoutPanel CellWeekday3;
+        private System.Windows.Forms.FlowLayoutPanel CellWeekday4;
+        private System.Windows.Forms.FlowLayoutPanel CellWeekday5;
+        private System.Windows.Forms.FlowLayoutPanel CellWeekday6;
+        private System.Windows.Forms.FlowLayoutPanel CellWeekday7;
     }
 }
