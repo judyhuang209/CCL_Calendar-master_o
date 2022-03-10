@@ -1,7 +1,7 @@
 # CCL_Calendar-master_o
 
 
-A intergrated calendar for CCL sales team.
+An intergrated calendar for CCL sales team.
 
 Interface Sample:
 1. Daily Schedule 
